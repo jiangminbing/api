@@ -1,7 +1,7 @@
 <!-- Logback configuration. See http://logback.qos.ch/manual/index.html -->
 <configuration scan="true" scanPeriod="2 seconds">
     <include resource="org/springframework/boot/logging/logback/base.xml" />
-    <property name="WIN_LOG_HOME" value="./logs/appApi" />
+    <property name="WIN_LOG_HOME" value="D:/home/logs/appApi" />
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- 日志输出编码 -->
         <layout class="ch.qos.logback.classic.PatternLayout">
