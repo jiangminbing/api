@@ -1,7 +1,6 @@
 package com.soft.controller;
 
 import com.soft.parent.basic.req.AdSearchDto;
-import com.soft.parent.basic.res.AdDto;
 import com.soft.parent.basic.result.PageResult;
 import com.soft.parent.basic.result.ResCode;
 import com.soft.parent.basic.result.Result;

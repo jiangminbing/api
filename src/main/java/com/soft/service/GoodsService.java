@@ -1,14 +1,13 @@
 package com.soft.service;
 
-import com.soft.parent.basic.exception.CommonException;
 import com.soft.parent.basic.req.GoodsCategoryDto;
 import com.soft.parent.basic.req.GoodsPriceSearchDto;
 import com.soft.parent.basic.req.GoodsSearchDto;
-import com.soft.parent.basic.res.*;
 import com.soft.parent.basic.result.DetailResult;
 import com.soft.parent.basic.result.Page;
 import com.soft.parent.basic.result.PageResult;
 import com.soft.parent.basic.result.ResCode;
+import com.soft.parent.manager.po.*;
 import com.soft.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,14 +31,14 @@ public class GoodsService {
      * @return
      * @throws Exception
      */
-    public DetailResult<List<GoodsVo>> getPageFrontByGoodsCategory(GoodsCategoryDto dto, UserDto user) throws Exception{
+    public DetailResult<List<GoodsVo>> getPageFrontByGoodsCategory(GoodsCategoryDto dto, User user) throws Exception{
         DetailResult<List<GoodsVo>> result = new DetailResult<>(ResCode.SUCCESS);
-        List<GoodsDto> list = managerService.getGoodsByGoodsCategory(dto).getData();
+        List<Goods> list = managerService.getGoodsByGoodsCategory(dto).getData();
         if(list==null||list.isEmpty())return result;
         List<GoodsVo> goodsVOList = new ArrayList<>();
-        for(GoodsDto goods:list){
+        for(Goods goods:list){
             GoodsVo temGoodsVo = new GoodsVo(goods);
-            List<GoodsPriceDto> goodsPriceDtoList = managerService.findAllNormalGoodsPriceByGoodsId(goods.getGoodsId()).getData();
+            List<GoodsPrice> goodsPriceDtoList = managerService.findAllNormalGoodsPriceByGoodsId(goods.getGoodsId()).getData();
             goodsPriceDtoList = getCurrentUserGoodsprice(goodsPriceDtoList,user);
             if (goodsPriceDtoList == null || goodsPriceDtoList.size() == 0) {
                 temGoodsVo.setVo_countGoodsPrice(0);
@@ -76,15 +75,15 @@ public class GoodsService {
      * @return
      * @throws Exception
      */
-    public PageResult<GoodsVo> getPageFrontByGoodsCategory(GoodsCategoryDto dto, UserDto user,Page page) throws Exception{
+    public PageResult<GoodsVo> getPageFrontByGoodsCategory(GoodsCategoryDto dto, User user,Page page) throws Exception{
         PageResult<GoodsVo> result = new PageResult<>(ResCode.SUCCESS);
-        PageResult<GoodsDto> res = managerService.getPageGoodsByGoodsCategory(page,dto);
-        List<GoodsDto> list = res.getData();
+        PageResult<Goods> res = managerService.getPageGoodsByGoodsCategory(page,dto);
+        List<Goods> list = res.getData();
         if(list==null||list.isEmpty())return result;
         List<GoodsVo> goodsVOList = new ArrayList<>();
-        for(GoodsDto goods:list){
+        for(Goods goods:list){
             GoodsVo temGoodsVo = new GoodsVo(goods);
-            List<GoodsPriceDto> goodsPriceDtoList = managerService.findAllNormalGoodsPriceByGoodsId(goods.getGoodsId()).getData();
+            List<GoodsPrice> goodsPriceDtoList = managerService.findAllNormalGoodsPriceByGoodsId(goods.getGoodsId()).getData();
             goodsPriceDtoList = getCurrentUserGoodsprice(goodsPriceDtoList,user);
             if (goodsPriceDtoList == null || goodsPriceDtoList.size() == 0) {
                 temGoodsVo.setVo_countGoodsPrice(0);
@@ -113,15 +112,15 @@ public class GoodsService {
         result.setTotal(res.getTotal());
         return  result;
     }
-    public PageResult<GoodsVo> searchGoods(UserDto user, GoodsSearchDto searchDto)throws Exception{
+    public PageResult<GoodsVo> searchGoods(User user, GoodsSearchDto searchDto)throws Exception{
         PageResult<GoodsVo> result = new PageResult<>(ResCode.SUCCESS);
-        PageResult<GoodsDto> res = managerService.getGoodsByPage(searchDto);
-        List<GoodsDto> list = res.getData();
+        PageResult<Goods> res = managerService.getGoodsByPage(searchDto);
+        List<Goods> list = res.getData();
         if(list==null||list.isEmpty())return result;
         List<GoodsVo> goodsVOList = new ArrayList<>();
-        for(GoodsDto goods:list){
+        for(Goods goods:list){
             GoodsVo temGoodsVo = new GoodsVo(goods);
-            List<GoodsPriceDto> goodsPriceDtoList = managerService.findAllNormalGoodsPriceByGoodsId(goods.getGoodsId()).getData();
+            List<GoodsPrice> goodsPriceDtoList = managerService.findAllNormalGoodsPriceByGoodsId(goods.getGoodsId()).getData();
             goodsPriceDtoList = getCurrentUserGoodsprice(goodsPriceDtoList,user);
             if (goodsPriceDtoList == null || goodsPriceDtoList.size() == 0) {
                 temGoodsVo.setVo_countGoodsPrice(0);
@@ -151,10 +150,10 @@ public class GoodsService {
         return  result;
 
     }
-    public DetailResult<List<GoodsVo>> getPageFrontByGoodsId(UserDto user,Integer goodsId)throws Exception{
+    public DetailResult<List<GoodsVo>> getPageFrontByGoodsId(User user,Integer goodsId)throws Exception{
         DetailResult<List<GoodsVo>> result = new DetailResult<>();
-        List<GoodsDto> goodsList = new ArrayList<>();
-        GoodsDto tempgoods = managerService.getGoodById(goodsId).getData();
+        List<Goods> goodsList = new ArrayList<>();
+        Goods tempgoods = managerService.getGoodById(goodsId).getData();
         if(tempgoods!=null){
             if(user==null){
                 tempgoods.setDelState((byte)0);//未收藏
@@ -166,9 +165,9 @@ public class GoodsService {
                 }
                 goodsList.add(tempgoods);
                 List<GoodsVo> goodsVOList = new ArrayList<GoodsVo>();
-                for(GoodsDto goods:goodsList){
+                for(Goods goods:goodsList){
                     GoodsVo temGoodsVo = new GoodsVo(goods);
-                    List<GoodsPriceDto> goodsPriceDtoList = managerService.findAllNormalGoodsPriceByGoodsId(goods.getGoodsId()).getData();
+                    List<GoodsPrice> goodsPriceDtoList = managerService.findAllNormalGoodsPriceByGoodsId(goods.getGoodsId()).getData();
                     goodsPriceDtoList = getCurrentUserGoodsprice(goodsPriceDtoList,user);
                     if (goodsPriceDtoList == null || goodsPriceDtoList.size() == 0) {
                         temGoodsVo.setVo_countGoodsPrice(0);
@@ -200,15 +199,15 @@ public class GoodsService {
         return  result;
 
     }
-    public PageResult<GoodsVo> getPageFrontByMyStoreGoods(UserDto user,Page page)throws Exception{
+    public PageResult<GoodsVo> getPageFrontByMyStoreGoods(User user,Page page)throws Exception{
         PageResult<GoodsVo> result = new PageResult<>(ResCode.SUCCESS);
-        PageResult<GoodsDto> res = managerService.getPageByMyStoreGoods(page,user.getUserId());
-        List<GoodsDto> list = res.getData();
+        PageResult<Goods> res = managerService.getPageByMyStoreGoods(page,user.getUserId());
+        List<Goods> list = res.getData();
         if(list==null||list.isEmpty())return result;
         List<GoodsVo> goodsVOList = new ArrayList<>();
-        for(GoodsDto goods:list){
+        for(Goods goods:list){
             GoodsVo temGoodsVo = new GoodsVo(goods);
-            List<GoodsPriceDto> goodsPriceDtoList = managerService.findAllNormalGoodsPriceByGoodsId(goods.getGoodsId()).getData();
+            List<GoodsPrice> goodsPriceDtoList = managerService.findAllNormalGoodsPriceByGoodsId(goods.getGoodsId()).getData();
             goodsPriceDtoList = getCurrentUserGoodsprice(goodsPriceDtoList,user);
             if (goodsPriceDtoList == null || goodsPriceDtoList.size() == 0) {
                 temGoodsVo.setVo_countGoodsPrice(0);
@@ -237,12 +236,12 @@ public class GoodsService {
         result.setTotal(res.getTotal());
         return  result;
     }
-    public DetailResult<List<GoodsPriceDto>> getGoodsPriceByGoodsId(UserDto user ,Integer goodsId) throws Exception{
-        DetailResult<List<GoodsPriceDto>> result = new DetailResult<>(ResCode.SUCCESS);
+    public DetailResult<List<GoodsPrice>> getGoodsPriceByGoodsId(User user ,Integer goodsId) throws Exception{
+        DetailResult<List<GoodsPrice>> result = new DetailResult<>(ResCode.SUCCESS);
         GoodsPriceSearchDto searchDto = new GoodsPriceSearchDto();
         searchDto.setGoodsId(goodsId);
         searchDto.setState((byte)1);
-        List<GoodsPriceDto> list= managerService.searchGoodsPrice(searchDto).getData();
+        List<GoodsPrice> list= managerService.searchGoodsPrice(searchDto).getData();
         if(list!=null&&!list.isEmpty()){
             list = getCurrentUserGoodsprice(list,user);
             result.setData(list);
@@ -261,7 +260,7 @@ public class GoodsService {
      * @return
      * @throws Exception
      */
-    List<GoodsPriceDto> getCurrentUserGoodsprice(List<GoodsPriceDto> list,UserDto user)throws Exception{
+    List<GoodsPrice> getCurrentUserGoodsprice(List<GoodsPrice> list,User user)throws Exception{
         if(list==null||list.isEmpty())return list;
         if(user==null){
             // 用户未登录，购物车数量全部为0,实际价就是零售价
@@ -270,7 +269,7 @@ public class GoodsService {
             }
         }else {
             // 用户已登录，需要查询购物车里规格数量，以及换算实际价
-            UserPrivilegeDto userPrivilege = managerService.getUserPrivilegeByUser(user.getUserId()).getData();
+            UserPrivilege userPrivilege = managerService.getUserPrivilegeByUser(user.getUserId()).getData();
             int powerPF = userPrivilege.getIsWholesaleprice();// 享受批发价
             int rebate = userPrivilege.getDiscount();// 折扣
             for (int y = 0; y < list.size(); y++) {
@@ -287,7 +286,7 @@ public class GoodsService {
                         .setRetailPrice(retailPrice * rebate / 100);// 零售价再乘以折扣
                 // 获取购物车中的数量
                 int count = 0;
-                ShoppingCartDto  shoppingCart = managerService
+                ShoppingCart shoppingCart = managerService
                         .queryShoppingCartByUserIdAndPriceId(user.getUserId(),list.get(y).getPriceId()).getData();
                 if (shoppingCart != null) {
                     count = shoppingCart.getQuantity();

@@ -3,12 +3,12 @@ package com.soft.controller;
 import com.alibaba.fastjson.JSON;
 import com.soft.parent.basic.req.GoodsCategoryDto;
 import com.soft.parent.basic.req.GoodsSearchDto;
-import com.soft.parent.basic.res.GoodsPriceDto;
-import com.soft.parent.basic.res.UserDto;
 import com.soft.parent.basic.result.DetailResult;
 import com.soft.parent.basic.result.Page;
 import com.soft.parent.basic.result.PageResult;
 import com.soft.parent.basic.result.ResCode;
+import com.soft.parent.manager.po.GoodsPrice;
+import com.soft.parent.manager.po.User;
 import com.soft.service.GoodsService;
 import com.soft.vo.GoodsVo;
 import io.swagger.annotations.ApiParam;
@@ -45,10 +45,10 @@ public class GoodsController extends BaseContrller {
                                                                    @ApiParam(required = false,value = "用户Id")@RequestParam(required = false) Integer userId,
                                                                    @ApiParam(required = false,value = "token")@RequestParam(required = false) String token){
         try{
-            UserDto user = null;
+            User user = null;
             if(userId!=null){
                 if(!checkToken(userId,token))return new DetailResult(ResCode.TOKEN_INCORRECT);
-                user = new UserDto();
+                user = new User();
                 user.setUserId(userId);
             }
             GoodsCategoryDto dto = new GoodsCategoryDto();
@@ -76,10 +76,10 @@ public class GoodsController extends BaseContrller {
                                                               @ApiParam(required = false,value = "token")@RequestParam(required = false) String token
                                                               ){
         try{
-            UserDto user = null;
+            User user = null;
             if(userId!=null){
                 if(!checkToken(userId,token))return new PageResult(ResCode.TOKEN_INCORRECT);
-                user = new UserDto();
+                user = new User();
                 user.setUserId(userId);
             }
             GoodsCategoryDto dto = new GoodsCategoryDto();
@@ -107,10 +107,10 @@ public class GoodsController extends BaseContrller {
                                                                            @ApiParam(required = false,value = "用户Id")@RequestParam(required = false) Integer userId,
                                                                            @ApiParam(required = false,value = "token")@RequestParam(required = false) String token){
         try{
-            UserDto user = null;
+            User user = null;
             if(userId!=null){
                 if(!checkToken(userId,token))return new PageResult(ResCode.TOKEN_INCORRECT);
-                user = new UserDto();
+                user = new User();
                 user.setUserId(userId);
             }
 
@@ -140,10 +140,10 @@ public class GoodsController extends BaseContrller {
                                                              @ApiParam(required = false,value = "用户Id")@RequestParam(required = false) Integer userId,
                                                              @ApiParam(required = false,value = "token")@RequestParam(required = false) String token){
         try{
-            UserDto user = null;
+            User user = null;
             if(userId!=null){
                 if(!checkToken(userId,token))return new DetailResult(ResCode.TOKEN_INCORRECT);
-                user = new UserDto();
+                user = new User();
                 user.setUserId(userId);
             }
             return goodsService.getPageFrontByGoodsId(user,goodsId);
@@ -164,10 +164,10 @@ public class GoodsController extends BaseContrller {
                                                            @ApiParam(required = false,value = "用户Id")@RequestParam(required = false) Integer userId,
                                                            @ApiParam(required = false,value = "token")@RequestParam(required = false) String token){
         try{
-            UserDto user = null;
+            User user = null;
             if(userId!=null){
                 if(!checkToken(userId,token))return new PageResult(ResCode.TOKEN_INCORRECT);
-                user = new UserDto();
+                user = new User();
                 user.setUserId(userId);
             }
 
@@ -197,7 +197,7 @@ public class GoodsController extends BaseContrller {
                                                           @ApiParam(required = true,value = "token")@RequestParam(required = true) String token){
         try{
             if(!checkToken(userId,token))return new PageResult(ResCode.TOKEN_INCORRECT);
-            UserDto user = new UserDto();
+            User user = new User();
             user.setUserId(userId);
 
             Page page =new Page(pageNo,pageSize);
@@ -213,14 +213,14 @@ public class GoodsController extends BaseContrller {
      */
     @ResponseBody
     @RequestMapping(value = "/getGoodsPriceListByGoodsId" ,method = {RequestMethod.GET,RequestMethod.POST})
-    public DetailResult<List<GoodsPriceDto>>  getGoodsPriceListByGoods(  @ApiParam(required = true,value = "商品Id")@RequestParam(required = true) Integer goodId,
-                                                                         @ApiParam(required = false,value = "用户Id")@RequestParam(required = false) Integer userId,
-                                                                         @ApiParam(required = false,value = "token")@RequestParam(required = false) String token){
+    public DetailResult<List<GoodsPrice>>  getGoodsPriceListByGoods(@ApiParam(required = true,value = "商品Id")@RequestParam(required = true) Integer goodId,
+                                                                    @ApiParam(required = false,value = "用户Id")@RequestParam(required = false) Integer userId,
+                                                                    @ApiParam(required = false,value = "token")@RequestParam(required = false) String token){
         try{
-            UserDto user = null;
+            User user = null;
             if(userId!=null){
                 if(!checkToken(userId,token))return new DetailResult(ResCode.TOKEN_INCORRECT);
-                user = new UserDto();
+                user = new User();
                 user.setUserId(userId);
             }
 

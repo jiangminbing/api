@@ -1,6 +1,6 @@
 package com.soft.vo;
 
-import com.soft.parent.basic.res.GoodsDto;
+import com.soft.parent.manager.po.Goods;
 
 import java.util.Date;
 
@@ -221,7 +221,7 @@ public class GoodsVo {
         this.vo_unitName = vo_unitName;
     }
 
-    public GoodsVo(GoodsDto goods) {
+    public GoodsVo(Goods goods) {
         this.adminId = goods.getAdminId();
         this.categoryId = goods.getCategoryId();
         this.createTime = goods.getCreateTime();

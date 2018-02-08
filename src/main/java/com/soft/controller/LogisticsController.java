@@ -1,9 +1,9 @@
 package com.soft.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.soft.parent.basic.res.LogisticsDto;
 import com.soft.parent.basic.result.DetailResult;
 import com.soft.parent.basic.result.ResCode;
+import com.soft.parent.manager.po.Logistics;
 import com.soft.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * @Author jiangmb
  * @Time 2018/2/5.
+ * 配送信息
  */
 @Controller
 @RequestMapping("/front/logistics/logistic")
@@ -27,7 +28,7 @@ public class LogisticsController extends BaseContrller {
     private ManagerService managerService;
     @RequestMapping(value = "/getListLogistics",method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
-    public DetailResult<List<LogisticsDto>> getListLogistics(){
+    public DetailResult<List<Logistics>> getListLogistics(){
         try{
             return managerService.getListLogistics();
         }catch (Exception e){

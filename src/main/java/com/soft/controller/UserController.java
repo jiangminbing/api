@@ -1,11 +1,12 @@
 package com.soft.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.soft.parent.basic.res.UserDto;
 import com.soft.parent.basic.result.DetailResult;
 import com.soft.parent.basic.result.ResCode;
 import com.soft.parent.basic.result.Result;
+import com.soft.parent.manager.po.User;
 import com.soft.service.UserService;
+import com.soft.vo.UserVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -32,8 +33,8 @@ public class UserController extends BaseContrller{
     @RequestMapping(value = "/toLogin",method={RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     @ApiOperation(value = "用户登录")
-    public DetailResult<UserDto> login(@ApiParam(required = true, value = "电话号码") @RequestParam(required = true) String mobile,
-                                       @ApiParam(required = true,value = "密码")@RequestParam(required = true)String psw){
+    public DetailResult<UserVo> login(@ApiParam(required = true, value = "电话号码") @RequestParam(required = true) String mobile,
+                                      @ApiParam(required = true,value = "密码")@RequestParam(required = true)String psw){
         try {
             printParam("toLogin==>mobile:"+mobile+",psw:"+psw);
             return userService.login(mobile,psw);
