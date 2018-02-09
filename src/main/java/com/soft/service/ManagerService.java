@@ -1,13 +1,11 @@
 package com.soft.service;
 
-import com.soft.parent.basic.req.AdSearchDto;
-import com.soft.parent.basic.req.GoodsCategoryDto;
-import com.soft.parent.basic.req.GoodsPriceSearchDto;
-import com.soft.parent.basic.req.GoodsSearchDto;
+import com.soft.parent.basic.req.*;
 import com.soft.parent.basic.result.DetailResult;
 import com.soft.parent.basic.result.Page;
 import com.soft.parent.basic.result.PageResult;
 import com.soft.parent.basic.result.Result;
+import com.soft.parent.manager.model.OrderDto;
 import com.soft.parent.manager.po.*;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -94,6 +92,18 @@ public interface ManagerService {
 
     @RequestMapping(value = "getMessageCount",method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
-    public DetailResult<Long> getMessageCount(@RequestParam Integer userId) throws Exception;
+    DetailResult<Long> getMessageCount(@RequestParam Integer userId) throws Exception;
+
+    @RequestMapping(value = "addOrder",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    DetailResult<String> addOrder(@RequestBody OrderDto order) throws Exception;
+
+    @RequestMapping(value = "searchOrder",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    PageResult<OrderDto> searchOrder(@RequestBody OrderSearchDto dto)throws Exception;
+
+    @RequestMapping(value = "getOrderByOrderNum",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    DetailResult<OrderDto> getOrderByOrderNum(@RequestParam String orderNum) throws Exception;
 
 }
