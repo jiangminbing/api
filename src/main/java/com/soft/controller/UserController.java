@@ -10,6 +10,7 @@ import com.soft.parent.manager.model.OrderDto;
 import com.soft.parent.manager.po.User;
 import com.soft.service.ManagerService;
 import com.soft.service.UserService;
+import com.soft.vo.OrderVo;
 import com.soft.vo.UserVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -168,6 +169,17 @@ public class UserController extends BaseContrller{
             return new DetailResult(ResCode.SYS_ERR);
         }
     }
+
+    /**
+     * 下订单 查询出当前用户的收货信息，商品信息，配送信息
+     * @param goodIds
+     * @return
+     */
+//    @ResponseBody
+//    @RequestMapping(value = "/doOrder",method={RequestMethod.POST,RequestMethod.GET})
+//    public DetailResult<OrderVo> doOrder(@ApiParam(required = true, value = "商品Id集") @RequestParam(required = true) String goodIds){
+//
+//    }
 
 
 

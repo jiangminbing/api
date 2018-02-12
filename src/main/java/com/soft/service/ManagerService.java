@@ -106,4 +106,16 @@ public interface ManagerService {
     @ResponseBody
     DetailResult<OrderDto> getOrderByOrderNum(@RequestParam String orderNum) throws Exception;
 
+    @RequestMapping(value = "/getUserDefaultReceive",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    DetailResult<Receive> getUserDefaultReceive(@RequestParam Integer userId) throws Exception;
+
+    @RequestMapping(value = "/getUserByOpenId",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    DetailResult<User> getUserByOpenId(@RequestParam String openId) throws Exception;
+
+    @RequestMapping(value = "/getFristLogistics",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    DetailResult<Logistics> getFristLogistics()throws Exception;
+
 }
